@@ -108,4 +108,4 @@ INSERT INTO tbl_menu VALUES (null, '마라깐쇼한라봉', 22000, 5, 'N');
 
 INSERT INTO tbl_menu VALUES (null, '돌미나리백설기', 5000, 11, 'Y');
 
-COMMIT;
+COMMIT;employeedb
