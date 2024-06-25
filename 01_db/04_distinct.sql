@@ -41,7 +41,6 @@ SELECT
  									 );
 
 
-
 -- 다중열 distinct
 SELECT
 		 category_code
