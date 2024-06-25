@@ -64,8 +64,8 @@ HAVING AVG(menu_price) > 12000	-- 4	-- having절은 주로 그룹 함수 또는 
 
 -- ---------------------------------------------------
 -- 여긴 필수 아냐!
--- ROLL UP
--- gruop을 묶을 때 하나의 기준(하나의 컬럼)으로 그룹화하여 rollup dmf gkaus
+-- ROLL UP(말아올려)
+-- gruop을 묶을 때 하나의 기준(하나의 컬럼)으로 그룹화하여 rollup 을 하면
 -- 총 합계의 개념이 나온다.
 SELECT
 		 SUM(menu_price)
@@ -82,3 +82,5 @@ SELECT
   FROM tbl_menu
  GROUP BY menu_price, category_code
   WITH ROLLUP;
+-- with rollup(말아올려 더한다)
+-- 말아 올려서 다 더한다.

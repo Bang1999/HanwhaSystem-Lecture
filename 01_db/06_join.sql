@@ -78,10 +78,3 @@ SELECT
   FROM tbl_category a
   JOIN tbl_category b ON(a.ref_category_code = b.category_code);
   
-
-
-
-
-
-
-
