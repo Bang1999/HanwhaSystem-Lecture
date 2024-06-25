@@ -50,3 +50,35 @@ SELECT
 HAVING SUM(menu_price) >= 20000;
 
 
+-- 모든걸 사용한 것
+SELECT									-- 5
+		 category_code
+	  , AVG(menu_price)
+  FROM tbl_menu						-- 1
+ WHERE menu_price > 10000			-- 2
+ GROUP BY category_code				-- 3
+HAVING AVG(menu_price) > 12000	-- 4	-- having절은 주로 그룹 함수 또는 그룹 단위 조건
+ ORDER BY 1 DESC;						-- 6
+
+
+
+-- ---------------------------------------------------
+-- 여긴 필수 아냐!
+-- ROLL UP
+-- gruop을 묶을 때 하나의 기준(하나의 컬럼)으로 그룹화하여 rollup dmf gkaus
+-- 총 합계의 개념이 나온다.
+SELECT
+		 SUM(menu_price)
+	  , category_code
+  FROM tbl_menu
+ GROUP BY category_code
+  WITH ROLLUP;
+  
+-- group을 묶을 때 여러개의 기준(여러개의 컬럼)으로 그룹화하여 rollup
+SELECT 
+		 SUM(menu_price)
+	  , menu_price
+	  , category_code
+  FROM tbl_menu
+ GROUP BY menu_price, category_code
+  WITH ROLLUP;
