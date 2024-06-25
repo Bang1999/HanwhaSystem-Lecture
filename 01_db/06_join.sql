@@ -35,9 +35,53 @@ SELECT
  		 a.menu_name
  	  , b.category_name
  	  , a.category_code
+  FROM tbl_menu a JOIN tbl_category b USING(category_code);
+
+-- --------------------------------------------------------------
+-- outer join
+-- join은 순차적으로 진행된다.
+-- join 키워드를 기준으로 왼쪽 오른쪽 을 left, right join
+-- 1) left join
+SELECT
+		 a.category_name
+	  , b.menu_name
+  FROM tbl_category a
+  LEFT JOIN tbl_menu b ON (a.category_code = b.category_code);
+-- 해석 : 카테고리를 보고 싶은데 메뉴도 보고싶어
+-- 1 대 다 관계
+
+-- 2) right join
+SELECT 
+		 a.menu_name
+	  , b.category_name
   FROM tbl_menu a
-  JOIN tbl_category b USING(category_code);
+ RIGHT JOIN tbl_category b ON(a.category_code = b.category_code);
+-- 해석 : 메뉴를 보고 싶은데 카테고리도 보고싶네
+-- 이번엔 다 대 1 관계
+
+-- 3) cross join
+-- 주로 잘못될 경우에 cross join 이 이루어진다.
+-- 조건이 필요 없다.
+SELECT
+ 		 a.menu_name
+ 	  , b.category_name
+  FROM tbl_menu a
+ CROSS JOIN tbl_category b;
+
+-- 4) self join
+-- (빙글빙글) 내가 내 테이블을 join해버리네? 키득키득
+-- a에 해당하는 것은 하위 카테고리, b에 해당하는 것은 상위 카테고리
+-- 무한 대댓글 시스템~
+SELECT
+  		 a.category_name
+  	  , b.category_name
+  FROM tbl_category a
+  JOIN tbl_category b ON(a.ref_category_code = b.category_code);
   
+
+
+
+
 
 
 
