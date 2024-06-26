@@ -137,7 +137,7 @@ SELECT
      , SALARY
      , JOB_CODE
   FROM EMPLOYEE
- WHERE JOB_CODE = 'J2'
+ WHERE JOB_CODE = 'J2'               -- AND 가 OR 보다 우선순위가 더 높다.
    AND SALARY >= 2000000
     OR JOB_CODE = 'J7';
 -- ---------------------------------------------------------
@@ -211,7 +211,7 @@ SELECT
 	  , b.DEPT_TITLE
 	  , c.LOCAL_NAME
   FROM employee a
- RIGHT JOIN department b ON b.DEPT_ID = a.DEPT_CODE
+  LEFT JOIN department b ON b.DEPT_ID = a.DEPT_CODE
   LEFT JOIN location c ON c.LOCAL_CODE = b.LOCATION_ID
  WHERE a.BONUS IS NOT NULL;
 
@@ -225,7 +225,7 @@ SELECT
 	  , b.LOCAL_NAME AS '근무지역명'
   FROM location b 
  RIGHT JOIN department c ON c.LOCATION_ID = b.LOCAL_CODE
-  JOIN employee d ON c.DEPT_ID = d.DEPT_CODE
+ RIGHT JOIN employee d ON c.DEPT_ID = d.DEPT_CODE
   LEFT JOIN job e ON e.JOB_CODE = d.JOB_CODE
  WHERE c.DEPT_ID = 'D2';
  
@@ -280,7 +280,7 @@ SELECT
   FROM job a
  RIGHT JOIN employee b ON a.JOB_CODE = b.JOB_CODE
   LEFT JOIN department c ON c.DEPT_ID = b.DEPT_CODE
- RIGHT JOIN location d ON d.LOCAL_CODE = c.LOCATION_ID
+  LEFT JOIN location d ON d.LOCAL_CODE = c.LOCATION_ID
   LEFT JOIN national e ON d.NATIONAL_CODE = e.NATIONAL_CODE
  WHERE e.NATIONAL_CODE = 'KO' 
     OR e.NATIONAL_CODE = 'JP';
@@ -322,7 +322,7 @@ SELECT
   FROM job a
  RIGHT JOIN employee b ON a.JOB_CODE = b.JOB_CODE
   LEFT JOIN department c ON c.DEPT_ID = b.DEPT_CODE
- RIGHT JOIN location d ON d.LOCAL_CODE = c.LOCATION_ID
+  LEFT JOIN location d ON d.LOCAL_CODE = c.LOCATION_ID
   LEFT JOIN national e ON d.NATIONAL_CODE = e.NATIONAL_CODE
  WHERE a.JOB_NAME = '대리'
    AND d.LOCAL_NAME LIKE 'ASIA%';
