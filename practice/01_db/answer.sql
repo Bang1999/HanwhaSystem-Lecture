@@ -220,20 +220,13 @@ SELECT
 	    b.EMP_NAME
      , a.JOB_NAME
      , b.SALARY
-     , b.SALARY*12 AS '연봉'  -- 연봉은 테이블을 따로 만들어서 해야할거같은데 어쩌노
+     , LEAST(b.SALARY, b.SALARY*(1 + COALESCE(b.BONUS, 0)))*12 AS '연봉'  -- 연봉은 테이블을 따로 만들어서 해야할거같은데 어쩌노
   FROM job a
  RIGHT JOIN employee b ON a.JOB_CODE = b.JOB_CODE
   LEFT JOIN sal_grade c ON c.SAL_LEVEL = b.SAL_LEVEL
  WHERE b.SALARY > c.MIN_SAL;
 
 SELECT * FROM sal_grade;
-
--- 연봉테이블 만들기
-SELECT 
-		 d.
-  FROM employee d
-  LEFT JOIN sal_grade e ON e.SAL_LEVEL = d.SAL_LEVEL
- WHERE d.BONUS IS NOT NULL; 
  
 -- 6. 한국(KO)과 일본(JP)에 근무하는 직원들의
 -- 사원명, 부서명, 지역명, 국가명을 조회하시오.(15명)
@@ -250,14 +243,15 @@ SELECT
  WHERE e.NATIONAL_CODE = 'KO' 
     OR e.NATIONAL_CODE = 'JP';
   
--- ??? 7. 같은 부서에 근무하는 직원들의 사원명, 부서코드, 동료이름을 조회하시오.
+-- 7. 같은 부서에 근무하는 직원들의 사원명, 부서코드, 동료이름을 조회하시오.
 -- self join 사용(60명)
 SELECT
-		 *
-  FROM department a
- RIGHT JOIN employee b ON a.DEPT_ID = b.DEPT_CODE
- GROUP BY a.DEPT_TITLE 
- ;
+		 a.EMP_NAME
+	  , a.DEPT_CODE
+	  , b.EMP_NAME
+  FROM employee a
+  JOIN employee b ON a.DEPT_CODE = b.DEPT_CODE
+ WHERE a.EMP_NAME <> b.EMP_NAME;
 
 -- 8. 보너스포인트가 없는 직원들 중에서 직급코드가 
 -- J4와 J7인 직원들의 사원명, 직급명, 급여를 조회하시오.

@@ -1,4 +1,5 @@
 /* DDL(Data Definition Language) */
+/* CREATE */
 CREATE TABLE if NOT EXISTS tb1(
   pk INT PRIMARY KEY,
   fk INT,
@@ -73,11 +74,11 @@ DESC tb2;
 -- 삭제(delete) : 테이블의 초기화(테이블 처음 만들 당시로 돌려줌)
 -- 절삭(truncate) : 데이터에 관련된 인덱스도 같이 밀어준다. 효율좋은 초기화 방법
 CREATE TABLE if NOT EXISTS tb3 (
-  pk INT AUTO_INCREMENT,	-- 여기서 제약 조건 거는건 테이블 제약 조건
-  fk INT,
-  col1 VARCHAR(255),
-  PRIMARY KEY(pk),			-- 컬럼 제약 조건
-  CHECK(col1 IN('Y', 'N')) -- 컬럼 제약 조건
+  pk INT AUTO_INCREMENT,	-- 컬럼 제약 조건
+  fk INT,                  -- 컬럼 제약 조건
+  col1 VARCHAR(255),       -- 컬럼 제약 조건
+  PRIMARY KEY(pk),			-- 테이블 제약 조건
+  CHECK(col1 IN('Y', 'N')) -- 테이블 제약 조건
 );
 
 INSERT 
