@@ -44,6 +44,7 @@ SHOW INDEX FROM phone; 		-- phone에 인덱스 걸려있는거 보는 법
 SELECT * FROM phone WHERE phone_name = 'galaxyS24';
 EXPLAIN SELECT * FROM phone WHERE phone_name = 'galaxyS24';
 
+EXPLAIN SELECT * FROM phone;
 
 -- rebuild(주기적으로 한번씩 다시 index를 rebuild해 주어야 한다.
 -- (mariadb는 optimize 키워드를 사용한다.))
@@ -51,4 +52,3 @@ OPTIMIZE TABLE phone;
 
 DROP INDEX idx_name ON phone;
 SHOW INDEX FROM phone;		-- index가 두줄이였는데 한줄로 변경되었다.
-
