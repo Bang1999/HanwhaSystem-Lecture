@@ -175,6 +175,7 @@ CREATE TABLE if NOT EXISTS user_foreignkey2 (
   email VARCHAR(255),
   grade_code INT,
   FOREIGN KEY(grade_code) REFERENCES user_grade(grade_code)		
+  ON UPDATE SET NULL
   ON DELETE SET NULL 		-- [삭제룰 추가]	참조중인거 지우면 null로 표기해주는거 
 ) ENGINE=INNODB;				-- 원래 참조중인거 못지움 
 
@@ -185,14 +186,19 @@ VALUES
 (1, 'user02', 'passmenudb02', '유관순', '여', '010-333-2123', 'yu@gmail.com', 10);
 
 -- 다른 삭제룰이 없는 자식 테이블의 데이터 방해를 제거
-TRUNCATE user_foreignkey1;
+
+TRUNCATE user_grade;
+TRUNCATE user_foreignkey3;
 
 -- 현재 회원의 참조 컬럼 값 확인
 SELECT * FROM user_foreignkey2;
 
 -- 참조하는 부모 테이블의 행 삭제 후 참조 컬럼 값 확인
 DELETE FROM user_grade WHERE grade_code = 10;		-- 테이블을 CREATE할 때 [삭제룰]을 적용해서가능
+UPDATE user_foreignkey2 SET  grade_code = NULL WHERE user_no = 1;
+UPDATE user_grade SET  grade_code = NULL WHERE grade_name = '일반회원';
 SELECT * FROM user_foreignkey2;
+SELECT * FROM user_grade;
 
 -- -------------------------------------------------------------------------------------------------
 -- 24.06.27 START LINE
