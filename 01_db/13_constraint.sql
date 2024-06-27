@@ -193,3 +193,55 @@ SELECT * FROM user_foreignkey2;
 -- 참조하는 부모 테이블의 행 삭제 후 참조 컬럼 값 확인
 DELETE FROM user_grade WHERE grade_code = 10;		-- 테이블을 CREATE할 때 [삭제룰]을 적용해서가능
 SELECT * FROM user_foreignkey2;
+
+-- -------------------------------------------------------------------------------------------------
+-- 24.06.27 START LINE
+-- -------------------------------------------------------------------------------------------------
+/* 5. Check 제약 조건(조건식을 활용한) */
+-- 회사 정책에 맞춰 한다.(조건식이라는 것을 활용한 제약조건)
+DROP TABLE if EXISTS user_check;
+CREATE TABLE if NOT EXISTS user_check(
+  user_no INT AUTO_INCREMENT PRIMARY KEY,
+  user_name VARCHAR(255) NOT NULL,
+  gender VARCHAR(3) CHECK(gender IN ('남', '여')),			-- 무 결성 의 제약 조건
+  age INT CHECK(age >= 19)
+)ENGINE=INNODB;		-- 나중에 유의미한게 작성하는 곳이 될 것이다.
+
+INSERT
+  INTO user_check
+VALUES
+(NULL, '홍길동', '남', 25),
+(NULL, '이순신', '남', 33);
+
+SELECT * FROM user_check;
+
+-- 성별에 잘못된 값 입력해보기
+INSERT
+  INTO user_check
+VALUES
+(NULL, '아메바', '중', 19);	 -- gender constraints 오류
+
+INSERT
+  INTO user_check
+VALUES
+(NULL, '유관순', '여', 16);		-- age constraints 오류
+
+
+
+
+/* default 제약조건 */
+DROP TABLE if EXISTS tbl_country;
+CREATE TABLE if NOT EXISTS tbl_country (
+  country_code INT AUTO_INCREMENT PRIMARY KEY,
+  country_name VARCHAR(255) DEFAULT '한국',
+  population VARCHAR(255) DEFAULT '0명',
+  add_day DATE DEFAULT (CURRENT_DATE),
+  add_time DATETIME DEFAULT (CURRENT_TIME)
+) ENGINE=INNODB;
+
+INSERT
+  INTO tbl_country
+VALUES
+(NULL, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
+
+SELECT * FROM tbl_country;
